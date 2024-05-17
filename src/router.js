@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/tasks', tasksController.getAll);
 router.post('/tasks', tasksMiddleware.validateFieldTitle, tasksController.createTask);
+router.post('/upload', tasksMiddleware.upload.single('image'), tasksController.uploadImage);
 router.delete('/tasks/:id', tasksController.deleteTask);
 router.put('/tasks/:id', 
 tasksMiddleware.validateFieldStatus, 

@@ -1,3 +1,5 @@
+const multer = require('multer');
+
 const validateFieldTitle = (req, res, next) => {
     const { body } = req;
 
@@ -26,8 +28,21 @@ const validateFieldStatus = (req, res, next) => {
     next();
 };
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads');
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = `${Date.now()}-${file.originalname}`;
+        cb(null, uniqueSuffix);
+    }
+});
+
+const upload = multer({ storage });
+
 
 module.exports = {
     validateFieldTitle,
     validateFieldStatus,
+    upload,
 }
